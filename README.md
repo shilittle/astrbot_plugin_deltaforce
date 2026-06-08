@@ -4,7 +4,7 @@
 
 作者：CodeX
 
-本插件调用 Orzice 数据 API（https://orzice.com）。使用前需要先在 Orzice 购买并开通数据 API，取得可用的 API Token；本插件不提供 Orzice 账号、Token 或数据接口授权。
+本插件调用 Orzice 数据 API（https://orzice.com ）。使用前需要先在 Orzice 购买并开通数据 API，取得可用的 API Token；本插件不提供 Orzice 账号、Token 或数据接口授权。
 
 ## 功能
 
