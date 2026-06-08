@@ -1,9 +1,10 @@
 name: astrbot_plugin_deltaforce
 display_name: SSKの三角洲
 version: 0.2.0
-author: Codex
-desc: SSKの三角洲开放平台查询插件，支持开放查询和玩家授权数据查询。
-help: 使用 三角洲帮助 查看完整指南；支持每日密码、交易行、收益分析、玩家数据、玩家战绩和对局详情。
+author: CodeX
+short_desc: 三角洲行动 Orzice 数据查询插件。
+desc: 调用 Orzice 数据 API 查询三角洲行动地图密码、交易行、收益分析、玩家数据、玩家战绩和对局详情。
+help: 使用 三角洲帮助 查看完整指南；使用前需要先在 orzice.com 购买并配置数据 API Token。
 astrbot_version: ">=4.17.0,<5"
 support_platforms:
   - aiocqhttp

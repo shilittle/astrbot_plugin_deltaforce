@@ -30,8 +30,8 @@ from .deltaforce_openapi.renderer import LocalImageRenderer, RenderBundle, Rende
 
 @register(
     "SSKの三角洲",
-    "Codex",
-    "SSKの三角洲开放平台查询插件",
+    "CodeX",
+    "SSKの三角洲 Orzice 数据查询插件",
     "0.2.0",
 )
 class DeltaForceOpenApiPlugin(Star):

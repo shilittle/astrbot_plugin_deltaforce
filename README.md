@@ -1,122 +1,97 @@
 # SSKの三角洲
 
-This is a from-zero AstrBot plugin for Delta Force open-platform data queries.
-It uses confirmed open APIs from the final contract in
-`docs/api_contract.md` and returns concise text plus locally rendered images in
-QQ messages.
+适用于 AstrBot 的三角洲行动数据查询插件。
 
-## Source of Truth
+作者：CodeX
 
-Priority order:
+本插件调用 Orzice 数据 API（https://orzice.com）。使用前需要先在 Orzice 购买并开通数据 API，取得可用的 API Token；本插件不提供 Orzice 账号、Token 或数据接口授权。
 
-1. `docs/api_contract.md`
-2. Confirmed Apifox evidence used to update the contract
-3. `README.md`
+## 功能
 
-Do not implement undocumented params, fields, headers, cookies, or auth models.
+- 每日地图密码查询
+- 交易行价格、价格曲线和物品总览查询
+- 卡战备配置查询
+- 特勤处制造收益查询
+- 钥匙卡和子弹低价分析
+- 玩家授权、玩家数据、玩家战绩和对局详情查询
+- 文本加本地渲染图片的消息回复
 
-## Features
+## 安装
 
-- Base data bootstrap:
-  - `item_info_all`
-  - `item_price_all`
-- Commands:
-  - `三角洲帮助` / `三角洲查询帮助` / `三角洲插件帮助`
-  - `每日密码` / `今日密码` / `地图密码`
-  - `卡战备 <n> [均衡|枪优先|胸挂优先]`
-  - `交易行价格 <keyword>` / `价格` / `物价` / `价格曲线`
-  - `交易行价格 总览 [key1] [key2] [sort] [grade]`
-  - `交易行总览 [key1] [key2] [sort] [grade]` / `物品总览`
-  - `特勤处制造 <t> [l] [小时收益|总收益]` / `特勤制造`
-  - `钥匙卡分析 <n>`
-  - `子弹分析 <n>`
-  - `三角洲授权 <qq|微信>` / `三角洲绑定 <回调链接>` / `三角洲刷新授权`
-  - `玩家数据 [烽火|战场] [赛季ID]`
-  - `玩家战绩 [烽火|全面] [页码]`
-  - `对局详情 <房间号>`
-- Server-side token query.
-- Player authorization through the documented open-platform OAuth helper APIs.
-- Cache layer.
-- Local item index.
-- Local item database with item image records.
-- Text-plus-image QQ output for successful queries.
-- Local rendered image cache and local API item image cache.
+### 通过 AstrBot WebUI 安装
 
-## Out of Scope
+1. 打开 AstrBot WebUI。
+2. 进入「插件」页面。
+3. 点击右下角「+」按钮。
+4. 选择通过 URL 安装，填写：
 
-- Browser crawlers.
-- ACGICE screenshot extraction.
-- TTS.
-- Push.
-- Entertainment features.
-- Login-state management.
-
-Player authorization is intentionally limited to the documented Apifox flow:
-generate an authorization URL, verify the callback URL, store the returned
-`quid` and cookie fields locally, and refresh through `quid`. The plugin does
-not implement an independent login flow.
-
-## Configuration
-
-The plugin reads the open-platform token from configuration key `api_token`.
-If that value is empty, it reads `key.txt` in this plugin directory by default.
-
-`key.txt` is treated as a local secret and must never be printed or sent to QQ.
-
-Player authorization is stored in `cache/player_auth.json` by default. Treat
-that file as a local secret as well.
-
-For local file-based configuration, copy `key.txt.example` to `key.txt` and put
-the token on a single line. `key.txt`, `cache/`, SQLite databases, rendered
-images, and Python bytecode are intentionally ignored by Git.
-
-## Repository Layout
-
-- `main.py`: AstrBot plugin entrypoint and command handlers.
-- `deltaforce_openapi/`: API client, cache layer, data stores, renderers, and
-  command implementations.
-- `docs/api_contract.md`: final API contract used by the implementation.
-- `scripts/`: local maintenance and validation helpers.
-- `metadata.yaml`, `_conf_schema.json`, `requirements.txt`: AstrBot plugin
-  metadata, WebUI config schema, and runtime dependencies.
-
-## AstrBot Compatibility
-
-The plugin follows the current AstrBot Star plugin layout:
-
-- `main.py` contains the `Star` subclass and command handlers.
-- `metadata.yaml` declares metadata, display name, supported platforms, and the
-  AstrBot version range.
-- `_conf_schema.json` declares WebUI-managed configuration.
-- `requirements.txt` declares `aiohttp` for async upstream HTTP requests and
-  `Pillow` for local image rendering.
-- Successful command replies use AstrBot message chains with text plus a local
-  rendered image.
-- The item overview feature uses `item_list_pro_key` and `item_list_pro`
-  lazily. It does not bulk refresh at startup; each requested overview option is
-  cached with a local update time.
-
-Required AstrBot version:
-
-- `>=4.17.0,<5`
-
-## Local Checks
-
-Run:
-
-```bash
-python3 scripts/self_check.py
-python3 scripts/check_connection.py
+```text
+https://github.com/shilittle/astrbot_plugin_deltaforce.git
 ```
 
-`check_connection.py` reads the configured token source and performs a safe
-open-interface connection check without printing the token.
+5. 安装完成后重载插件，或重启 AstrBot。
 
-Before publishing to GitHub, initialize the repository from this directory and
-review the staged file list:
+AstrBot 会根据仓库中的 `requirements.txt` 安装依赖。如果依赖安装失败，请在 AstrBot WebUI 的依赖安装入口或当前运行环境中手动安装：
 
 ```bash
-git init
-git add .
-git status --short
+pip install -r requirements.txt
 ```
+
+### 手动安装
+
+进入 AstrBot 的插件目录后克隆仓库：
+
+```bash
+cd /path/to/AstrBot/data/plugins
+git clone https://github.com/shilittle/astrbot_plugin_deltaforce.git
+```
+
+然后重启 AstrBot，或在 WebUI 插件页面重载插件。
+
+## 配置
+
+插件支持通过 AstrBot WebUI 配置项填写 API Token：
+
+- `api_token`：Orzice 数据 API Token。推荐使用 WebUI 填写。
+- `key_file`：本地 Token 文件路径，默认 `key.txt`。当 `api_token` 为空时才会读取该文件。
+
+如果使用本地文件方式，可以在插件目录创建 `key.txt`：
+
+```bash
+cp key.txt.example key.txt
+```
+
+然后把 Orzice API Token 写入 `key.txt`，文件内容只保留一行 Token。
+
+请不要把 `key.txt`、玩家授权缓存或任何 Token 发到群聊，也不要提交到公开仓库。
+
+## 常用命令
+
+| 命令 | 用途 |
+| --- | --- |
+| `三角洲帮助` | 查看插件帮助 |
+| `每日密码` | 查询各地图每日密码 |
+| `交易行价格 <物品名>` | 查询交易行价格摘要 |
+| `交易行总览 [筛选项]` | 查询交易行物品总览 |
+| `卡战备 <等级> [偏好]` | 查询卡战备配置 |
+| `特勤处制造 <类型> [等级] [排序]` | 查询制造收益 |
+| `钥匙卡分析 <数量>` | 查询钥匙卡低价分析 |
+| `子弹分析 <数量>` | 查询子弹收益和低价分析 |
+| `三角洲授权 <qq|微信>` | 获取玩家授权链接 |
+| `三角洲绑定 <回调链接>` | 保存玩家授权回调 |
+| `三角洲刷新授权` | 刷新玩家授权 |
+| `玩家数据 [烽火|战场] [赛季ID]` | 查询已绑定玩家数据 |
+| `玩家战绩 [烽火|全面] [页码]` | 查询已绑定玩家战绩 |
+| `对局详情 <房间号>` | 查询对局详情 |
+
+命令参数不确定时，可以先发送 `三角洲帮助`。
+
+## 实现框架
+
+- `main.py`：AstrBot Star 插件入口，注册所有聊天命令。
+- `metadata.yaml`：AstrBot 插件元数据，供插件列表和插件市场识别。
+- `_conf_schema.json`：AstrBot WebUI 配置项定义。
+- `requirements.txt`：插件运行依赖。
+- `deltaforce_openapi/`：Orzice API 客户端、缓存、物品索引、玩家授权、本地图片渲染和命令实现。
+
+插件使用异步 HTTP 请求访问上游 API，并使用本地缓存减少重复请求。玩家授权数据和渲染图片默认保存在插件本地缓存目录中。

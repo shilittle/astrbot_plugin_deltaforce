@@ -1,6 +1,6 @@
 {
   "api_token": {
-    "description": "三角洲数据帝开放平台密钥。留空时读取 key_file 指向的本地文件。",
+    "description": "Orzice 数据 API Token。使用前需要先在 orzice.com 购买并开通数据 API。留空时读取 key_file 指向的本地文件。",
     "type": "string",
     "default": "",
     "hint": "不要在群聊中发送密钥。"
