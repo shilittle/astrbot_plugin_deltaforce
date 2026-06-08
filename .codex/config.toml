@@ -1,0 +1,13 @@
+[project]
+name = "astrbot_plugin_deltaforce"
+contract = "docs/api_contract.md"
+
+
+shell_environment_policy.inherit = "all"
+
+[rules]
+contract_first = true
+plain_text_output = true
+forbid_player_auth = true
+forbid_browser_crawler = true
+forbid_token_output = true

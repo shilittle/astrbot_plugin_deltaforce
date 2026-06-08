@@ -1,0 +1,22 @@
+name: astrbot_plugin_deltaforce
+display_name: SSKの三角洲
+version: 0.2.0
+author: Codex
+desc: SSKの三角洲开放平台查询插件，支持开放查询和玩家授权数据查询。
+help: 使用 三角洲帮助 查看完整指南；支持每日密码、交易行、收益分析、玩家数据、玩家战绩和对局详情。
+astrbot_version: ">=4.17.0,<5"
+support_platforms:
+  - aiocqhttp
+  - qq_official
+  - telegram
+  - wecom
+  - lark
+  - dingtalk
+  - discord
+  - slack
+  - kook
+  - vocechat
+  - weixin_official_account
+  - satori
+  - misskey
+  - line

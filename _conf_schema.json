@@ -1,0 +1,88 @@
+{
+  "api_token": {
+    "description": "三角洲数据帝开放平台密钥。留空时读取 key_file 指向的本地文件。",
+    "type": "string",
+    "default": "",
+    "hint": "不要在群聊中发送密钥。"
+  },
+  "key_file": {
+    "description": "本地密钥文件路径。相对路径按插件目录解析。",
+    "type": "string",
+    "default": "key.txt"
+  },
+  "request_timeout": {
+    "description": "上游接口请求超时时间，单位秒。",
+    "type": "float",
+    "default": 10.0
+  },
+  "result_limit": {
+    "description": "每个命令默认展示的条目数量。",
+    "type": "int",
+    "default": 5
+  },
+  "item_cache_seconds": {
+    "description": "基础物品数据缓存时间，单位秒。",
+    "type": "int",
+    "default": 3600
+  },
+  "minute_cache_seconds": {
+    "description": "价格曲线短缓存时间，单位秒。",
+    "type": "int",
+    "default": 60
+  },
+  "map_refresh_hour": {
+    "description": "每日密码日更小时。本接口文档当前为0点5分更新。",
+    "type": "int",
+    "default": 0
+  },
+  "map_refresh_minute": {
+    "description": "每日密码日更分钟。本接口文档当前为0点5分更新。",
+    "type": "int",
+    "default": 5
+  },
+  "card_cache_seconds": {
+    "description": "卡战备查询缓存时间，单位秒。文档建议有人查询再获取并缓存2分钟。",
+    "type": "int",
+    "default": 120
+  },
+  "manufacture_cache_seconds": {
+    "description": "特勤制造缓存时间，单位秒。文档更新频率为10分钟。",
+    "type": "int",
+    "default": 600
+  },
+  "overview_cache_seconds": {
+    "description": "交易行物品总览单个筛选项缓存时间，单位秒。默认20分钟以节约查询次数。",
+    "type": "int",
+    "default": 1200
+  },
+  "overview_key_cache_seconds": {
+    "description": "交易行物品总览筛选项缓存时间，单位秒。",
+    "type": "int",
+    "default": 604800
+  },
+  "player_cache_seconds": {
+    "description": "玩家数据接口短缓存时间，单位秒。",
+    "type": "int",
+    "default": 60
+  },
+  "player_auth_file": {
+    "description": "玩家授权本地缓存文件。相对路径按插件目录解析，请保护文件权限。",
+    "type": "string",
+    "default": "cache/player_auth.json"
+  },
+  "image_cache_seconds": {
+    "description": "本地渲染结果图片缓存时间，单位秒。",
+    "type": "int",
+    "default": 3600
+  },
+  "image_asset_cache_seconds": {
+    "description": "API物品图片本地缓存时间，单位秒。",
+    "type": "int",
+    "default": 604800
+  },
+  "max_render_page_height": {
+    "description": "渲染图片自动分页高度上限，单位像素。",
+    "type": "int",
+    "default": 6000
+  }
+}
